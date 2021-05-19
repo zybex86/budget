@@ -7,9 +7,7 @@ oeg = os.environ.get
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = oeg(
-    'DJANGO_SECRET_KEY', '__SUPER__SECRET__SECRET__SQUIRREL__'
-)
+SECRET_KEY = oeg('DJANGO_SECRET_KEY')
 
 DEBUG = oeg('DJANGO_DEBUG', 'False').lower() == 'true'
 
