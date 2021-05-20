@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Category(models.Model):
     name = models.CharField(_('category'), max_length=255)
-    description = models.CharField(_('description'), max_length=255)
+    description = models.CharField(_('description'), max_length=255, null=True)
 
     class Meta:
         verbose_name = _('category')
@@ -66,6 +66,7 @@ class Budget(models.Model):
 
 
 class BaseIncomeExpenseModel(models.Model):
+    name = models.CharField(_('name'), max_length=255)
     category = models.ForeignKey(
         Category,
         verbose_name='category',

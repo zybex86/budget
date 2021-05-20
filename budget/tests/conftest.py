@@ -1,6 +1,7 @@
 import pytest
 
 from django.contrib.auth import get_user_model
+from model_bakery import baker
 from rest_framework.test import APIClient
 
 
@@ -27,3 +28,20 @@ def admin_fixture():
     )
 
     return user
+
+
+@pytest.fixture
+def category_fixture():
+    return baker.make(
+        'core.Category',
+        name='test Category',
+    )
+
+
+@pytest.fixture
+def budget_fixture(user_fixture):
+    return baker.make(
+        'core.Budget',
+        name='test Budget',
+        owner=user_fixture
+    )
