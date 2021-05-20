@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin
 )
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -38,3 +39,67 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
+
+
+class Category(models.Model):
+    name = models.CharField(_('category'), max_length=255)
+    description = models.CharField(_('description'), max_length=255)
+
+    class Meta:
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
+        ordering = ('name',)
+
+
+class Budget(models.Model):
+    name = models.CharField(_('name'), max_length=255)
+    owner = models.ForeignKey(
+        User,
+        verbose_name='owners',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = _('budget')
+        verbose_name_plural = _('budgets')
+        ordering = ('name',)
+
+
+class BaseIncomeExpenseModel(models.Model):
+    category = models.ForeignKey(
+        Category,
+        verbose_name='category',
+        on_delete=models.CASCADE
+    )
+    budget = models.ForeignKey(
+        Budget,
+        verbose_name='budgets',
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Income(BaseIncomeExpenseModel):
+    income = models.FloatField(_('income'))
+
+    def __str__(self):
+        return str(self.income)
+
+    class Meta:
+        verbose_name = _('income')
+        verbose_name_plural = _('incomes')
+        ordering = ('pk',)
+
+
+class Expense(BaseIncomeExpenseModel):
+    expense = models.FloatField(_('expense'))
+
+    def __str__(self):
+        return str(self.expense)
+
+    class Meta:
+        verbose_name = _('expense')
+        verbose_name_plural = _('expenses')
+        ordering = ('pk',)
