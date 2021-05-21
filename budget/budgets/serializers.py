@@ -25,9 +25,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class BudgetSerializer(serializers.ModelSerializer):
-    incomes = IncomeSerializer(many=True)
-    expenses = ExpenseSerializer(many=True)
+    income = IncomeSerializer(many=True)
+    expense = ExpenseSerializer(many=True)
 
     class Meta:
         model = Budget
-        fields = ('owner', 'name', 'incomes', 'expenses',)
+        fields = ('owner', 'name', 'income', 'expense',)
