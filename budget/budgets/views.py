@@ -1,5 +1,10 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import (
+    CreateModelMixin,
+    DestroyModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin
+)
 
 from budgets.serializers import (
     BudgetSerializer,
@@ -10,7 +15,9 @@ from budgets.serializers import (
 from core.models import Budget, Category, Expense, Income
 
 
-class BudgetViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin):
+class BudgetViewSet(
+    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
+):
     queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
 
@@ -21,12 +28,16 @@ class BudgetViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateMo
         serializer.save(owner=self.request.user)
 
 
-class CategoryViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin):
+class CategoryViewSet(
+    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
+):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class IncomeViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin):
+class IncomeViewSet(
+    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
+):
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer
 
@@ -34,7 +45,9 @@ class IncomeViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateMo
         return Income.objects.filter(budget__owner=self.request.user)
 
 
-class ExpenseViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin):
+class ExpenseViewSet(
+    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
+):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 

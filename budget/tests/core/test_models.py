@@ -68,12 +68,12 @@ class TestOtherModels:
 
         income = Income.objects.create(
             name=name,
-            income=ammount,
+            value=ammount,
             category=category_fixture,
             budget=budget_fixture
         )
         assert income.name == name
-        assert income.income == ammount
+        assert income.value == ammount
         assert income.budget == budget_fixture
         assert income.category == category_fixture
 
@@ -83,11 +83,11 @@ class TestOtherModels:
 
         expense = Expense.objects.create(
             name=name,
-            expense=ammount,
+            value=ammount,
             category=category_fixture,
             budget=budget_fixture
         )
         assert expense.name == name
-        assert expense.expense == ammount
+        assert expense.value == ammount
         assert expense.budget == budget_fixture
         assert expense.category == category_fixture

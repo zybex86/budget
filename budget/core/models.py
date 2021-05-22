@@ -67,13 +67,13 @@ class Budget(models.Model):
 
 class BaseIncomeExpenseModel(models.Model):
     name = models.CharField(_('name'), max_length=255)
+    value = models.FloatField(_('value'))
 
     class Meta:
         abstract = True
 
 
 class Income(BaseIncomeExpenseModel):
-    income = models.FloatField(_('income'))
     category = models.ForeignKey(
         Category,
         related_name='incomes',
@@ -95,7 +95,6 @@ class Income(BaseIncomeExpenseModel):
 
 
 class Expense(BaseIncomeExpenseModel):
-    expense = models.FloatField(_('expense'))
     category = models.ForeignKey(
         Category,
         related_name='expenses',

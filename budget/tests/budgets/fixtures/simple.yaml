@@ -1,0 +1,28 @@
+- model: core.Category
+  pk: 1
+  fields:
+    name: 'test_123'
+    description: 'test desc'
+
+- model: core.Budget
+  pk: 1
+  fields:
+    name: 'test_123'
+    owner: 1
+
+
+- model: core.Income
+  pk: 1
+  fields:
+    name: 'test_123'
+    category: 1
+    budget: 1
+    value: 1.1
+
+- model: core.Expense
+  pk: 1
+  fields:
+    name: 'test_123'
+    category: 1
+    budget: 1
+    value: 1.1
