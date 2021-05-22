@@ -55,7 +55,7 @@ class Budget(models.Model):
     name = models.CharField(_('name'), max_length=255)
     owner = models.ForeignKey(
         User,
-        verbose_name='owners',
+        related_name='owners',
         on_delete=models.CASCADE
     )
 
@@ -67,16 +67,6 @@ class Budget(models.Model):
 
 class BaseIncomeExpenseModel(models.Model):
     name = models.CharField(_('name'), max_length=255)
-    category = models.ForeignKey(
-        Category,
-        verbose_name='category',
-        on_delete=models.CASCADE
-    )
-    budget = models.ForeignKey(
-        Budget,
-        verbose_name='budgets',
-        on_delete=models.CASCADE
-    )
 
     class Meta:
         abstract = True
@@ -84,6 +74,16 @@ class BaseIncomeExpenseModel(models.Model):
 
 class Income(BaseIncomeExpenseModel):
     income = models.FloatField(_('income'))
+    category = models.ForeignKey(
+        Category,
+        related_name='incomes',
+        on_delete=models.CASCADE
+    )
+    budget = models.ForeignKey(
+        Budget,
+        related_name='incomes',
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return str(self.income)
@@ -96,6 +96,16 @@ class Income(BaseIncomeExpenseModel):
 
 class Expense(BaseIncomeExpenseModel):
     expense = models.FloatField(_('expense'))
+    category = models.ForeignKey(
+        Category,
+        related_name='expenses',
+        on_delete=models.CASCADE
+    )
+    budget = models.ForeignKey(
+        Budget,
+        related_name='expenses',
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return str(self.expense)

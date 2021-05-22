@@ -18,7 +18,22 @@ class TestBudgetsViews:
         api_client.force_login(user_fixture)
         response = api_client.get(reverse('budgets:budget-list'))
 
-        assert response.status == status.HTTP_200_OK
-        assert response.json() == {
-
-        }
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == [
+            {
+                'owner': 1,
+                'name': 'test Budget1',
+                'incomes': [],
+                'expenses': []
+            }, {
+                'owner': 1,
+                'name': 'test Budget2',
+                'incomes': [],
+                'expenses': []
+            }, {
+                'owner': 1,
+                'name': 'test Budget3',
+                'incomes': [],
+                'expenses': []
+            },
+        ]
