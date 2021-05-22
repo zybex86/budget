@@ -15,9 +15,13 @@ from budgets.serializers import (
 from core.models import Budget, Category, Expense, Income
 
 
-class BudgetViewSet(
+class BaseViewSet(
     GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
 ):
+    pass
+
+
+class BudgetViewSet(BaseViewSet):
     queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
 
@@ -28,16 +32,12 @@ class BudgetViewSet(
         serializer.save(owner=self.request.user)
 
 
-class CategoryViewSet(
-    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
-):
+class CategoryViewSet(BaseViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class IncomeViewSet(
-    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
-):
+class IncomeViewSet(BaseViewSet):
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer
 
@@ -45,9 +45,7 @@ class IncomeViewSet(
         return Income.objects.filter(budget__owner=self.request.user)
 
 
-class ExpenseViewSet(
-    GenericViewSet, ListModelMixin, RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
-):
+class ExpenseViewSet(BaseViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 
